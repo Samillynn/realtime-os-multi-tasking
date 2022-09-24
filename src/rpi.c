@@ -230,6 +230,13 @@ void uart_printf(usize spi_channel, usize uart_channel, cstring fmt, ...) {
 	uart_puts(spi_channel, uart_channel, buffer, strlen(buffer));
 	break;
       }
+      case 'p': {
+	void* value = va_arg(vl, void*);
+	char buffer[MAX_BUFFER_SIZE];
+	u64_to_cstring((u64)value, buffer, 16);
+	uart_puts(spi_channel, uart_channel, buffer, strlen(buffer));
+	break;
+      }
       case 'u': {
 	u32 number = va_arg(vl, u32);
 	char buffer[MAX_BUFFER_SIZE];
