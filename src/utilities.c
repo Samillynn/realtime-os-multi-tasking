@@ -83,6 +83,71 @@ void u32_to_cstring(u32 number, cstring str, u32 base) {
   str[i ++] = '\0';
 }
 
+void i64_to_cstring(i64 number, cstring str, i32 base) {
+  bool negative = false;
+
+  if (number == 0) {
+    str[0] = '0';
+    str[1] = '\0';
+    return;
+  }
+
+  if (number < 0 && base == 10) {
+    negative = true;
+    number = -number;
+  }
+
+  usize i = 0;
+  while (number != 0) {
+    i64 remainder = number % base;
+    str[i ++] = (remainder > 9) ? (remainder - 10) + 'A' : remainder + '0';
+    number = number / base;
+  }
+
+  if (negative) {
+    str[i ++] = '-';
+  }
+
+  usize front = 0;
+  usize end = i - 1;
+  while (front < end) {
+    char tmp = str[front];
+    str[front] = str[end];
+    str[end] = tmp;
+    front ++;
+    end --;
+  }
+
+  str[i ++] = '\0';
+}
+
+void u64_to_cstring(u64 number, cstring str, u32 base) {
+  if (number == 0) {
+    str[0] = '0';
+    str[1] = '\0';
+    return;
+  }
+
+  usize i = 0;
+  while (number != 0) {
+    u64 remainder = number % base;
+    str[i ++] = (remainder > 9) ? (remainder - 10) + 'A' : remainder + '0';
+    number = number / base;
+  }
+
+  usize front = 0;
+  usize end = i - 1;
+  while (front < end) {
+    char tmp = str[front];
+    str[front] = str[end];
+    str[end] = tmp;
+    front ++;
+    end --;
+  }
+
+  str[i ++] = '\0';
+}
+
 i32 cstring_to_i32(cstring str) {
   i32 value = 0;
   usize str_len = strlen(str);
