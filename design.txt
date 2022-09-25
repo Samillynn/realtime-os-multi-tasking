@@ -6,25 +6,29 @@
 myId():
     __asm__(svc ?)
 
+i want to pass :
+from kernel -> still difficult? no -> load from task -> eret -> clean x0
+to kernel -> how to make easier ->
+    store x30 to sp
+    pass
 
 ldr_global reg, var = ldr reg =var; ldr reg [reg]
 exception_entry:
     context_switch to kernel
     mv x0 esr#code
-    call system_call
-    ldr_global x1
-    str x0 [x1 #?]
+    mv x1 esr#type
+    handle_exception(type, code)
     reschedule
 
 reschedule(){
-    switch user regs
+    set currentTask
+    call enterUser
 }
 
 svcCalls = array
-handle_interrupt(x){
-   return interrupt_handler[x]()
+handle_interrupt(type, code){
+    if type is svc:
+        ct.x[0] = interr_hand[x]()
+   return
 }
 
-
-
-Q: do we really need the kernel regs?
