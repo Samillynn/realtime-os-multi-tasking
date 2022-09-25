@@ -1,0 +1,30 @@
+1. call assembly in c for each syscall, use esr_el1 directly
+
+2. call svc(x) -> put x to esl ->
+    check task descriptor
+
+myId():
+    __asm__(svc ?)
+
+
+ldr_global reg, var = ldr reg =var; ldr reg [reg]
+exception_entry:
+    context_switch to kernel
+    mv x0 esr#code
+    call system_call
+    ldr_global x1
+    str x0 [x1 #?]
+    reschedule
+
+reschedule(){
+    switch user regs
+}
+
+svcCalls = array
+handle_interrupt(x){
+   return interrupt_handler[x]()
+}
+
+
+
+Q: do we really need the kernel regs?
