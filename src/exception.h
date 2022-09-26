@@ -2,12 +2,9 @@
 #define __EXCEPTION_H__
 
 #include "common.h"
-#include "task.h"
 
 #define EXCEPTION_CLASS_OFFSET 26
-#define SVC_CLASS 0b010101
-
-extern Task* current_task;
+#define SVC_CLASS 0x15
 
 u64 (*exception_handlers[1 << 16])(void);
 

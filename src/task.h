@@ -5,8 +5,8 @@
 #include "memory_block.h"
 
 STRUCT(Task) {
-  u32 tid;
-  u32 parent_tid;
+  i32 tid;
+  i32 parent_tid;
   u32 priority;
 
   u64 x[31];
@@ -14,7 +14,8 @@ STRUCT(Task) {
   u64 spsr;
   u64 pc;
 
-  MemoryBlock* address;
+  MemoryBlock* memory_block;
+  Task* next;
 };
 
 #endif
