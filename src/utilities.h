@@ -15,6 +15,8 @@ u32 cstring_to_u32(cstring str);
 i32 cstring_len_to_i32(cstring str, usize str_len);
 u32 cstring_len_to_u32(cstring str, usize str_len);
 
+i32 i32_clamp(i32 value, i32 min, i32 max);
+
 cstring cstring_get_token(const cstring line, usize line_len, usize idx, usize* token_size);
 
 #endif
