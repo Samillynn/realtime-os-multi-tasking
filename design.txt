@@ -1,3 +1,12 @@
+svc code of diff functions
+Create -> 1
+Yield -> 2
+Exit -> 3
+MyId -> 11
+MyParentId -> 12
+
+
+
 1. call assembly in c for each syscall, use esr_el1 directly
 
 2. call svc(x) -> put x to esl ->

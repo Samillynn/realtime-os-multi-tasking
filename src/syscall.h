@@ -1,12 +1,21 @@
-#ifndef __SYSCALL_H__
-#define __SYSCALL_H__
+//
+// Created by 28379 on 9/25/2022.
+//
+
+#ifndef CS452_K1_KSYSTEM_CALLS_H
+#define CS452_K1_KSYSTEM_CALLS_H
 
 #include "common.h"
+#include "task.h"
+#include "usyscall.h"
 
-i32 Create(i32 priority, void (*function)());
-i32 MyTid();
-i32 MyParentTid();
-void Yield();
-void Exit();
+extern Task * current_task;
 
-#endif
+u64 kCreate();
+u64 kMyTid();
+u64 kMyParentTid();
+void kYield();
+void kExit();
+
+
+#endif //CS452_K1_KSYSTEM_CALLS_H

@@ -13,6 +13,7 @@ STRUCT(Task) {
   u64 sp;
   u64 spsr;
   u64 pc;
+  u64 result;
 
   MemoryBlock* address;
 };
