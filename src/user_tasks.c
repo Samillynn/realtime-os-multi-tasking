@@ -13,6 +13,7 @@ void initial_user_task() {
         printf("Created: %d\n", tid);
     }
     printf("FirstUserTask: exiting\n");
+    Exit();
 }
 
 void demo_user_task() {

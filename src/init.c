@@ -15,8 +15,9 @@ void init_exception_handlers() {
 }
 
 void init_first_user_task() {
-    i8 priority = DEFAULT_PRIORITY;
+    printf("Initializing first user task");
     Task* task = create_task(INITIAL_PRIORITY);
-    task.pc = (u64)initial_user_task;
-
+    task->pc = (u64)initial_user_task;
+    // start to run user programs
+    schedule();
 }

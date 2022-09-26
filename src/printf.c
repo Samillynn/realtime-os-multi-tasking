@@ -34,6 +34,7 @@
 #include <stdint.h>
 
 #include "printf.h"
+#include "rpi.h"
 
 
 // define this globally (e.g. gcc -DPRINTF_INCLUDE_CONFIG_H ...) to include the
@@ -118,9 +119,13 @@
 #endif
 
 
+
+void _putchar(char character) {
+    uart_putc(0, 0, character);
+}
+
 // output function type
 typedef void (*out_fct_type)(char character, void* buffer, size_t idx, size_t maxlen);
-
 
 // wrapper (used as buffer) for output function type
 typedef struct {
