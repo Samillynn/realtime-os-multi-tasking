@@ -44,12 +44,20 @@ Task* create_task(u8 priority) {
   if (task_pool_ptr) { // TODO: check priority range
     task = task_pool_ptr;
     task_pool_ptr = task->next;
+    
     task->tid = task_id_cnt;
     task_id_cnt += 1;
     task->parent_tid = current_task ? -1 : current_task->tid;
     task->priority = priority;
-    task->memory_block = memory_allocate_block();
+
+    for (usize i = 0; i < 31; i ++) {
+      task->x[i] = 0;
+    }
     task->sp = task->memory_block->address;
+    task->spsr = 0;
+    task->pc = 0;
+    
+    task->memory_block = memory_allocate_block();
     task->next = NULL;
 
     task_queue_add(task);
@@ -64,7 +72,12 @@ void remove_current_task() {
   current_task->tid = 0;
   current_task->parent_tid = -1;
   current_task->priority = 0;
+  for (usize i = 0; i < 31; i ++) {
+    current_task->x[i] = 0;
+  }
   current_task->sp = 0;
+  current_task->spsr = 0;
+  current_task->pc = 0;
   current_task->memory_block = NULL;
   current_task = NULL;
 }
