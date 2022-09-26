@@ -56,10 +56,10 @@ leave_current_task:
     mrs x1, elr_el1
     str x1, [x0, #-8]!
 
-call_handle_exception:
+start_handle_exception
     mrs x0 esr_el1
     bl handle_exception
-    b _Reschedule
+    b schedule
 
 
 enter_current_task:

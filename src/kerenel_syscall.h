@@ -7,15 +7,14 @@
 
 #include "common.h"
 #include "task.h"
-#include "usyscall.h"
+#include "syscall.h"
 
 extern Task * current_task;
 
-u64 kCreate();
-u64 kMyTid();
-u64 kMyParentTid();
-void kYield();
-void kExit();
-
+u64 sys_create();
+u64 sys_tid();
+u64 sys_parent_tid();
+void sys_yield();
+void sys_exit();
 
 #endif //CS452_K1_KSYSTEM_CALLS_H
