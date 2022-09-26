@@ -6,6 +6,8 @@
 #include "task.h"
 #include "task_scheduler.h"
 
+u64 (*exception_handlers[1 << 16])(void);
+
 void handle_exception(u64 esr) {
   Task* current_task = get_current_task();
   

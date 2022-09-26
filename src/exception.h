@@ -6,7 +6,7 @@
 #define EXCEPTION_CLASS_OFFSET 26
 #define SVC_CLASS 0x15
 
-u64 (*exception_handlers[1 << 16])(void);
+extern u64 (*exception_handlers[1 << 16])(void);
 
 void handle_exception(u64 esr);
 

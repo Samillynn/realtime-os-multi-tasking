@@ -2,6 +2,8 @@
 #include "common.h"
 #include "rpi.h"
 #include "memory.h"
+#include "task.h"
+#include "task_scheduler.h"
 
 void boot() {
   init_gpio();
@@ -15,6 +17,6 @@ void kmain() {
   bool looping = true;
   
   while (looping) {
-    
+    Task* current_task = schedule();
   }
 }
