@@ -4,8 +4,6 @@
 
 .balign 0x800
 vector_table:
-
-.balign 0x80
 sp0_svc:
     b handle_error
 .balign 0x80
@@ -56,11 +54,3 @@ low_el32_fiq:
 .balign 0x80
 low_el32_serror:
     b handle_error
-
-
-
-
-
-.balign 0x400
-synchronous:
-    b exception_entry

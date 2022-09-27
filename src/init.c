@@ -8,8 +8,11 @@
 
 void init() {
     init_vector_table();
+    printf("Vector table initialized");
     init_exception_handlers();
+    printf("Exception handlers initialized");
     init_first_user_task();
+    printf("Initial user task table initialized");
 }
 
 void init_exception_handlers() {

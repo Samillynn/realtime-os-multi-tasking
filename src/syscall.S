@@ -6,7 +6,7 @@
 .align 4
 .global Create
 Create:
-    svc 1
+    svc #1
     ret
 
 
@@ -14,26 +14,26 @@ Create:
 .align 4
 .global Yield
 Yield:
-    svc 2
+    svc #2
     ret
 
 .text
 .align 4
 .global Exit
 Exit:
-    svc 3
+    svc #3
     ret
 
 .text
 .align 4
 .global MyTid
 MyTid:
-    svc 11
+    svc #11
     ret
 
 .text
 .align 4
 .global MyParentTid
 MyParentTid:
-    svc 12
+    svc #12
     ret
