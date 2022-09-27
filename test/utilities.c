@@ -22,3 +22,7 @@ void print_current_task() {
 void print_reg(u64 x, int code) {
     printf("Current Register(%d) is %d\r\n", code, x);
 }
+
+void print_error(u64 elr, u64 esr) {
+    printf("ELR is %d; ESR is %d\r\n", elr, esr);
+}

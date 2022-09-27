@@ -158,3 +158,6 @@ enter_current_task:
 .global handle_error
 .align 4
 handle_error:
+    mrs x0, elr_el1
+    mrs x1, esr_el1
+    bl print_error
