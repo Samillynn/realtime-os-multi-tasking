@@ -1,9 +1,8 @@
 .text
-.global init
+.global init_vector_table
 .align 4
 
-init:
+init_vector_table:
     adr x0, vector_table
     msr vbar_el1, x0
-    bl init_exception_handlers
-    bl init_first_user_task
+    ret

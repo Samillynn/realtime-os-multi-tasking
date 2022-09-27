@@ -3,10 +3,10 @@
 
 #include "common.h"
 
-extern u64 Create(i32 priority, void (*function)());
-extern u64 MyTid();
-extern u64 MyParentTid();
+extern i32 Create(i32 priority, void (*function)());
+extern i32 MyTid();
+extern i32 MyParentTid();
 extern void Yield();
 extern void Exit();
 
-#endif
+#endi

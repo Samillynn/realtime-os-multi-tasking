@@ -182,6 +182,7 @@ char uart_getc(usize spi_channel, usize uart_channel) {
 void uart_putc(usize spi_channel, usize uart_channel, char c) {
   if (uart_read_register(spi_channel, uart_channel, UART_TXLVL))
     uart_write_register(spi_channel, uart_channel, UART_THR, c);
+  for(int i=0; i < 1024; i++) asm volatile ("yield");
 }
 
 void uart_puts(usize spi_channel, usize uart_channel, const cstring buffer, usize buffer_len) {

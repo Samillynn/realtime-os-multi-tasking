@@ -8,7 +8,7 @@
 // TODO: what is the priority
 #define INITIAL_PRIORITY 10
 
-void initial_user_task() __attribute__((weak));
+void initial_user_task();
 
 void demo_user_task();
 

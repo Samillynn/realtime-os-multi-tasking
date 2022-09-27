@@ -10,12 +10,14 @@
 u64 (*exception_handlers[1 << 16 ])(void);
 
 void handle_exception(u64 esr) {
+    printf("Calling Handle Exception\r\n");
+    printf("Exception code is %u", esr);
     u8 exception_class = (esr >> EXCEPTION_CLASS_OFFSET);
     if (exception_class == SVC_CLASS) {
         u16 imm = esr;
         get_current_task()->x[0] = exception_handlers[imm]();
     } else {
-        printf("Unsupported exception class: %d\n", exception_class);
+        printf("Unsupported exception class: %d\n\n", exception_class);
     }
 
     return;
