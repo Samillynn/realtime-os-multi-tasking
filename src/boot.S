@@ -41,7 +41,7 @@ _start:
     // are we already in EL1?
     mrs  x1, CurrentEL
     and  x1, x1, #8
-    cbnz x1, el1_entry
+    cbz  x1, el1_entry
 
     // otherwise, switch to EL1 by fake exception to return from
     ldr x2, =HCR_RW
@@ -56,12 +56,6 @@ _start:
     eret // -> el1_entry
 
 el1_entry:
-    // enable timer register access from EL0
-    mrs x0, cntkctl_el1
-    mov x1, #CNTKCTL_VALUE
-    orr x0, x0, x1
-    msr cntkctl_el1, x0
-
     // configure processor and mmu
     ldr x2, =SCTLR_VALUE_MMU_DISABLED
     msr sctlr_el1, x2
@@ -72,7 +66,6 @@ el1_entry:
     msr SPSel, #1
     ldr     x0, =stackend
     mov     sp, x0
-
     // Jump to our main() routine in C++ (make sure it doesn't return)
     bl      main
 
@@ -92,8 +85,8 @@ exit:
     wfi
     b    exit
 
-.section ".data"
-.align 4, 0
+.section ".bss"
+.balign 16
 stack:
     .rept 0x10000
     .byte 0
