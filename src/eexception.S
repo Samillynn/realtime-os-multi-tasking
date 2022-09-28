@@ -185,10 +185,11 @@ enter_current_task:
 .global handle_error
 .align 4
 handle_error:
-    mrs x0, CurrentEL
-    mrs x1, ELR_EL1
-    mrs x2, ESR_EL1
-    // mrs x3, ELR_EL2
-    // mrs x4, ESR_EL2
-    // bl print_error
+    mrs  x1, CurrentEL
+    and  x2, x1, #8
+    and  x3, x1, #4
+    lsr  x2, x2, #1
+    mvn  x2, x2
+    and  x4, x2, x3
+    cbz x4, exit
     ret

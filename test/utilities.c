@@ -24,8 +24,5 @@ void print_reg(u64 x, int code) {
 }
 
 void print_error(u64 current_el, u64 elr1, u64 esr1, u64 elr2, u64 esr2) {
-    current_el = (current_el >> 2) & 3;
-    printf("CurrentEL is %d\r\n", current_el);
-    printf("EL1 - ELR is %x; ESR is %d\r\n", elr1, esr1);
-    printf("EL2 - ELR is %x; ESR is %d\r\n", elr2, esr2);
+    printf("CEL:%x, ELR1:%d, ESR1:%d, ELR2:%d, ESR2:%d\r\n", current_el, elr1, esr1, elr2, esr2);
 }

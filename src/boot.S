@@ -40,8 +40,12 @@ _start:
 
     // are we already in EL1?
     mrs  x1, CurrentEL
-    and  x1, x1, #8
-    cbnz x1, el1_entry
+    and  x2, x1, #8
+    and  x3, x1, #4
+    lsr  x2, x2, #1
+    and  x4, x2, x3
+    cbnz x4, exit
+    cbnz x2, el1_entry
 
     // otherwise, switch to EL1 by fake exception to return from
     ldr x2, =HCR_RW
@@ -88,6 +92,7 @@ el1_entry:
     movk  w1, 0x5a00, lsl 16
     str w1, [x0]
 
+.global exit
 exit:
     wfi
     b    exit

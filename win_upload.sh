@@ -11,4 +11,3 @@ echo "${SCP}"
 echo "${UPL}"
 eval "${SCP}"
 eval "${UPL}"
-

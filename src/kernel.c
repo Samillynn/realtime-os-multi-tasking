@@ -7,15 +7,18 @@
 #include "exception.h"
 
 void boot() {
+    handle_error();
     init_gpio();
     init_spi(0);
     init_uart(0);
     printf("Init I/O\r\n");
+    handle_error();
 
     memory_init();
     printf("Init memory\r\n");
     handle_error();
     task_queue_init();
+    handle_error();
     printf("Init task queue\r\n");
     handle_error();
 }
