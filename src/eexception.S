@@ -188,6 +188,7 @@ handle_error:
     mrs x0, CurrentEL
     mrs x1, ELR_EL1
     mrs x2, ESR_EL1
-    mrs x3, ELR_EL2
-    mrs x4, ESR_EL2
+    // mrs x3, ELR_EL2
+    // mrs x4, ESR_EL2
+    // bl print_error
     ret
