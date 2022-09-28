@@ -3,9 +3,10 @@
 
 #include "common.h"
 
+#define MEMORY_BLOCK_SIZE 0x10000
+
 STRUCT(MemoryBlock) {
-  u64 address;
-  MemoryBlock* next;
+  u8 data[MEMORY_BLOCK_SIZE];
 };
 
 #endif

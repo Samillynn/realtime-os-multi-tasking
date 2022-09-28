@@ -1,36 +1,39 @@
 #include "memory.h"
 
-#define STACK_TOP 0x200000
-#define MEMORY_BLOCK_SIZE 0x10000
-
-static MemoryBlock memory_blocks[MEMORY_BLOCK_MAX_NUM];
-static MemoryBlock* memory_blocks_ptr;
+static MemoryBlock memory_blocks[MEMORY_BLOCK_MAX_NUM + 1];
+static bool memory_blocks_used[MEMORY_BLOCK_MAX_NUM];
 
 void memory_init() {
-  u64 ptr = STACK_TOP;
-  MemoryBlock* current = NULL;
-
   for (usize i = 0; i < MEMORY_BLOCK_MAX_NUM; i ++) {
-    ptr += MEMORY_BLOCK_SIZE;
-    memory_blocks[i].address = ptr;
-    memory_blocks[i].next = current;
-    current = &memory_blocks[i];
+    for (usize j = 0; j < MEMORY_BLOCK_SIZE; j ++) {
+      memory_blocks[i].data[j] = 0;
+    }
+    memory_blocks_used[i] = false;
   }
-
-  memory_blocks_ptr= current;
 }
 
 MemoryBlock* memory_allocate_block() {
-  if (!memory_blocks_ptr) return NULL;
+  MemoryBlock* memory_block = NULL;
+  
+  for (usize i = 0; i < MEMORY_BLOCK_MAX_NUM; i ++) {
+    if (memory_blocks_used[i] == false) {
+      memory_block = &memory_blocks[i];
+      memory_blocks_used[i] = true;
+      break;
+    }
+  }
 
-  MemoryBlock* memory_block = memory_blocks_ptr;
-  memory_blocks_ptr = memory_blocks_ptr->next;
-
-  memory_block->next = NULL;
   return memory_block;
 }
 
 void memory_free_block(MemoryBlock* memory_block) {
-  memory_block->next = memory_blocks_ptr;
-  memory_blocks_ptr = memory_block;
+  usize idx = memory_block - &memory_blocks[0];
+  for (usize i = 0; i < MEMORY_BLOCK_SIZE; i ++) {
+    memory_blocks[idx].data[i] = 0;
+  }
+  memory_blocks_used[idx] = false;
+}
+
+void* memory_get_block_end(MemoryBlock* memory_block) {
+  return (void*)(&memory_blocks[memory_block - &memory_blocks[0] + 1]);
 }

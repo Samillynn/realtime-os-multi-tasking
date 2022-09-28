@@ -99,10 +99,9 @@ Task* create_task(i32 priority) {
       task->parent_tid = -1;
     }
     task->priority = priority;
-
-    task->sp = task->memory_block->address;
     
     task->memory_block = memory_allocate_block();
+    task->sp = (u64)memory_get_block_end(task->memory_block);
     task->next = NULL;
 
     task_queue_add(task);
