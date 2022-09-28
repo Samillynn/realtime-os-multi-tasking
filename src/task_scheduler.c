@@ -100,7 +100,6 @@ Task *create_task(i32 priority, void (*func)(), i32 parent_tid) {
         printf("task_pool_ptr = %p\r\n", task_pool_ptr);
         task = task_pool_ptr;
         task_pool_ptr = task->next;
-
         task_init(task);
 
         task->tid = task_id_cnt;
@@ -111,7 +110,7 @@ Task *create_task(i32 priority, void (*func)(), i32 parent_tid) {
         // TODO: ask Daniel, swap the next 2 statements
         task->memory_block = memory_allocate_block();
 //        task->sp = task->memory_block->address;
-        task->sp = (u64)(stack + 9904);
+        task->sp = (u64)memory_get_block_end(task->memory_block);
 
         task->pc = (u64)func;
         task->x[30] = (u64)Exit;
