@@ -51,16 +51,17 @@ leave_current_task:
 start_handle_exception:
     mrs x0, esr_el1
     bl handle_exception
-    b schedule
+    bl schedule
 
 
 .align 4
 .text
 .global enter_current_task
-enter_current_task:
-    // load regs
-    bl get_current_task
+/** @arg current_task **/
+/** Context switch back to current_task **/
 
+enter_current_task:
+    bl get_current_task
     // load x1 - x30
     add x0, x0, #8
 
@@ -121,6 +122,23 @@ enter_current_task:
     mov sp, x1
     msr spsel, #1
 
+    // add x0, x0, #8
+    // mov x1, sp
+    // msr spsel, #0
+    // mov sp, x1
+    // msr spsel, #1
+
+    /** debug **/
+    msr spsel, #0
+    mov x20, x0
+    mov x0, sp
+    mov x1, #31
+    bl print_reg
+    mov x0, x20
+    msr spsel, #1
+
+    // msr spsel, #1
+
     /** debug **/
     mov x20, x0
     mov x1, #0
@@ -130,6 +148,13 @@ enter_current_task:
     // load spsr
     ldr x1, [x0], #8
     msr spsr_el1, x1
+
+    /** debug **/
+    mov x20, x0
+    mrs x0, spsr_el1
+    mov x1, #32
+    bl print_reg
+    mov x0, x20
 
     // load pc
     ldr x1, [x0], #8
@@ -152,12 +177,17 @@ enter_current_task:
     bl print_reg
     mov x0, x20
 
+    bl handle_error
+
     eret
 
 
 .global handle_error
 .align 4
 handle_error:
-    mrs x0, elr_el1
-    mrs x1, esr_el1
-    bl print_error
+    mrs x0, CurrentEL
+    mrs x1, ELR_EL1
+    mrs x2, ESR_EL1
+    mrs x3, ELR_EL2
+    mrs x4, ESR_EL2
+    ret

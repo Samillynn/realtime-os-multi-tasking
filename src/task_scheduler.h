@@ -5,19 +5,24 @@
 #include "task.h"
 
 STRUCT(TaskQueue) {
-  Task* front;
-  Task* end;
+    Task *front;
+    Task *end;
 };
 
 void task_queue_init();
-void task_queue_add(Task* task);
-Task* task_queue_pop();
-Task* task_queue_peek();
 
-Task* create_task(i32 priority);
+void task_queue_add(Task *task);
+
+Task *task_queue_pop();
+
+Task *task_queue_peek();
+
+Task *create_task(i32 priority, void func(), i32 parent_tid);
+
 void remove_current_task();
-Task* get_current_task();
 
-Task* schedule();
+Task *get_current_task();
+
+Task *schedule();
 
 #endif

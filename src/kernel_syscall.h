@@ -3,7 +3,7 @@
 
 #include "common.h"
 
-i32 sys_create(i32 priority);
+i32 sys_create();
 i32 sys_tid();
 i32 sys_parentTid();
 void sys_yield();

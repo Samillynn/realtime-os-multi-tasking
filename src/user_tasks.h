@@ -5,8 +5,7 @@
 #ifndef __USER_TASK__
 #define __USER_TASK__
 
-// TODO: what is the priority
-#define INITIAL_PRIORITY 10
+#define INITIAL_PRIORITY 5
 
 void initial_user_task();
 

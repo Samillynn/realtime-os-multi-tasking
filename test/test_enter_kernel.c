@@ -21,9 +21,12 @@ void initial_user_task() {
 
 int main() {
     boot();
+    printf("Boot successfully\r\n");
+    handle_error();
 
     while(1) {
         printf("Start Program\r\n");
         init();
+        printf("Kernel Program Exit\r\n");
     }
 }

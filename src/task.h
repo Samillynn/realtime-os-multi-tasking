@@ -17,7 +17,7 @@ STRUCT(Task) {
     u32 parent_tid;
     u32 priority;
 
-    MemoryBlock *memoryBlock;
+    MemoryBlock *memory_block;
     Task *next;
 };
 

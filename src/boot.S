@@ -72,6 +72,7 @@ el1_entry:
     msr SPSel, #1
     ldr     x0, =stackend
     mov     sp, x0
+
     // Jump to our main() routine in C++ (make sure it doesn't return)
     bl      main
 
