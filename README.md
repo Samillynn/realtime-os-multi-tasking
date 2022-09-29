@@ -8,6 +8,10 @@ https://git.uwaterloo.ca/h44ding/cs452_k1/-/tree/renhang
 Note that we tend to use branch *renhang* as our final submission.
 
 # Build Instructions
+## download
+```bash
+git clone --branch renhang https://git.uwaterloo.ca/h44ding/cs452_k1.git
+```
 ## build
 ```bash
 cd cs452_k1
