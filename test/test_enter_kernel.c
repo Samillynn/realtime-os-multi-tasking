@@ -22,12 +22,12 @@ void test_initial_user_task() {
     printf("Exiting first user task\r\n\n");
 }
 
-int main() {
-    boot();
-    printf("Boot successfully\r\n");
-    handle_error();
+/* int main() { */
+/*     boot(); */
+/*     printf("Boot successfully\r\n"); */
+/*     handle_error(); */
 
-    printf("Start Program\r\n");
-    init();
-    printf("Kernel Program Exit\r\n");
-}
+/*     printf("Start Program\r\n"); */
+/*     init(); */
+/*     printf("Kernel Program Exit\r\n"); */
+/* } */

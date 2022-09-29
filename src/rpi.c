@@ -174,15 +174,13 @@ void init_uart(uint32_t spi_channel) {
 }
 
 char uart_getc(usize spi_channel, usize uart_channel) {
-  if (uart_read_register(spi_channel, uart_channel, UART_RXLVL))
-    return uart_read_register(spi_channel, uart_channel, UART_RHR);
-  return '\0';
+  while (uart_read_register(spi_channel, uart_channel, UART_RXLVL) == 0) asm volatile("yield");
+  return uart_read_register(spi_channel, uart_channel, UART_RHR);
 }
 
 void uart_putc(usize spi_channel, usize uart_channel, char c) {
-  if (uart_read_register(spi_channel, uart_channel, UART_TXLVL))
-    uart_write_register(spi_channel, uart_channel, UART_THR, c);
-  for(int i=0; i < 1024; i++) asm volatile ("yield");
+  while (uart_read_register(spi_channel, uart_channel, UART_TXLVL) == 0) asm volatile("yield");
+  uart_write_register(spi_channel, uart_channel, UART_THR, c);
 }
 
 void uart_puts(usize spi_channel, usize uart_channel, const cstring buffer, usize buffer_len) {

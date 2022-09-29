@@ -7,7 +7,7 @@
 #include "boot.h"
 #include "../test/utilities.h"
 
-#define TASK_POOL_SIZE  128
+#define TASK_POOL_SIZE  64
 
 #define SPSR_MASK_ALL (7 << 6)
 #define SPSR_EL1h (5 << 0)
