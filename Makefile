@@ -22,10 +22,10 @@ OBJECTS := $(patsubst %.c, %.o, $(patsubst %.S, %.o, $(SOURCES)))
 DEPENDS := $(patsubst %.c, %.d, $(patsubst %.S, %.d, $(SOURCES)))
 
 # The first rule is the default, ie. "make", "make all" and "make kernel8.img" mean the same
-all: kernel8.img
+all: kernel8.img dump
 
 clean:
-	rm -f $(OBJECTS) $(DEPENDS) kernel8.elf kernel8.img
+	rm -f $(OBJECTS) $(DEPENDS) kernel8.elf kernel8.img dump
 
 kernel8.img: kernel8.elf
 	$(OBJCOPY) $< -O binary $@
@@ -33,6 +33,10 @@ kernel8.img: kernel8.elf
 kernel8.elf: $(OBJECTS) linker.ld
 	$(CC) $(CFLAGS) $(filter-out %.ld, $^) -o $@ $(LDFLAGS)
 	@$(OBJDUMP) -d kernel8.elf | fgrep -q q0 && printf "\n***** WARNING: SIMD INSTRUCTIONS DETECTED! *****\n\n" || true
+
+dump: kernel8.elf
+	@$(OBJDUMP) -D kernel8.elf >> dump
+
 
 %.o: %.c Makefile
 	$(CC) $(CFLAGS) -MMD -MP -c $< -o $@

@@ -7,16 +7,19 @@
 #include "../src/syscall.h"
 #include "../src/init.h"
 #include "../src/kernel.h"
+#include "../src/user_tasks.h"
 
-void initial_user_task() {
-    printf("Enter first user task\r\n");
-    printf("MyId: %d\r\n", MyTid());
-    printf("MyParentId: %d\r\n", MyParentTid());
+void test_initial_user_task() {
+    printf("Enter first user task\r\n\n");
+    printf("MyId: %d\r\n\n", MyTid());
+    printf("MyParentId: %d\r\n\n", MyParentTid());
     Yield();
-    printf("2: Tid: %d, ParentTid: %d\r\n", MyTid(), MyParentTid());
+    printf("2: Tid: %d, ParentTid: %d\r\n\n", MyTid(), MyParentTid());
     Yield();
-    printf("3: Tid: %d, ParentTid: %d\r\n", MyTid(), MyParentTid());
-    printf("Exiting first user task\r\n");
+    printf("3: Tid: %d, ParentTid: %d\r\n\n", MyTid(), MyParentTid());
+
+    Create(6, demo_user_task);
+    printf("Exiting first user task\r\n\n");
 }
 
 int main() {
@@ -24,9 +27,7 @@ int main() {
     printf("Boot successfully\r\n");
     handle_error();
 
-    while(1) {
-        printf("Start Program\r\n");
-        init();
-        printf("Kernel Program Exit\r\n");
-    }
+    printf("Start Program\r\n");
+    init();
+    printf("Kernel Program Exit\r\n");
 }

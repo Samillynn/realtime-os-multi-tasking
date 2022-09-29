@@ -4,6 +4,7 @@
 #include "syscall.h"
 #include "exception.h"
 #include "printf.h"
+#include "boot.h"
 #include "../test/utilities.h"
 
 #define TASK_POOL_SIZE  128
@@ -18,7 +19,7 @@ static TaskQueue task_queue[TASK_PRIORITY_MAX];
 
 static i32 task_id_cnt;
 
-static Task *current_task;
+Task *current_task;
 
 void task_queue_init() {
     current_task = NULL;
@@ -120,10 +121,11 @@ Task *create_task(i32 priority, void (*func)(), i32 parent_tid) {
         task->next = NULL;
 
         task_queue_add(task);
-        printf("Task created successfully\r\n");
+        printf("Task created successfully: tid=%d, pid=%d, pty=%d\r\n\n", task->tid, task->parent_tid, task->priority);
     } else {
         printf("Task creating failed\r\n");
     }
+    printf("------------------------------\r\n");
 
     return task;
 }
@@ -140,11 +142,21 @@ Task *get_current_task() {
 }
 
 Task *schedule() {
+    printf("Calling schedule\r\n");
     if (current_task) {
         task_queue_add(current_task);
     }
+
     current_task = task_queue_pop();
-    print_current_task();
-    enter_current_task();
+    if (get_current_task() != NULL) {
+        printf("The newly scheduled task is\r\n");
+        print_current_task();
+        printf("Enter current task, aka. context switch\r\n");
+        printf("------------------------------\r\n");
+        enter_current_task();
+    } else {
+        printf("All user tasks have finished, exit elegantly\r\n");
+        exit_all();
+    }
     return current_task;
 }

@@ -9,6 +9,8 @@ STRUCT(TaskQueue) {
     Task *end;
 };
 
+extern Task *current_task;
+
 void task_queue_init();
 
 void task_queue_add(Task *task);

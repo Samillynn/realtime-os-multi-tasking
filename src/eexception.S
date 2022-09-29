@@ -5,14 +5,13 @@
 exception_entry:
 
 leave_current_task:
-    // make sure that sp of current el is used
-    msr spsel, 1
-
     // store x0 to SP, so that x0 can be used temporarily
     str x0, [sp, #-16]!
 
     // put current task to x0
-    bl get_current_task
+    ldr x0, =current_task
+    ldr x0, [x0]
+    add x0, x0, #8
 
     // save x1 - x30
     stp x1, x2, [x0], #16
@@ -39,14 +38,17 @@ leave_current_task:
 
     // str spsr
     mrs x1, spsr_el1
-    str x1, [x0], #+8
+    str x1, [x0], #8
 
     // str pc
     mrs x1, elr_el1
-    str x1, [x0], #+8
+    str x1, [x0], #8
 
     // save x0
-    ldr x0, [sp], #16
+    ldr x1, [sp], #16
+    ldr x0, =current_task
+    ldr x0, [x0]
+    str x1, [x0]
 
 start_handle_exception:
     mrs x0, esr_el1
@@ -61,7 +63,9 @@ start_handle_exception:
 /** Context switch back to current_task **/
 
 enter_current_task:
-    bl get_current_task
+    ldr x0, =current_task
+    ldr x0, [x0]
+
     // load x1 - x30
     add x0, x0, #8
 
@@ -79,13 +83,6 @@ enter_current_task:
     ldr x12, [x0], #8
     ldr x13, [x0], #8
     ldr x14, [x0], #8
-    /** debug **/
-    mov x20, x0
-    mov x1, #14
-    mov x0, x14
-    bl print_reg
-    mov x0, x20
-
     ldr x15, [x0], #8
     ldr x16, [x0], #8
     ldr x17, [x0], #8
@@ -96,12 +93,6 @@ enter_current_task:
     ldr x22, [x0], #8
     ldr x23, [x0], #8
     ldr x24, [x0], #8
-    /** debug **/
-    mov x20, x0
-    mov x1, #24
-    mov x0, x24
-    bl print_reg
-    mov x0, x20
 
     ldr x25, [x0], #8
     ldr x26, [x0], #8
@@ -109,12 +100,6 @@ enter_current_task:
     ldr x28, [x0], #8
     ldr x29, [x0], #8
     ldr x30, [x0], #8
-    /** debug **/
-    mov x20, x0
-    mov x1, #30
-    mov x0, x30
-    bl print_reg
-    mov x0, x20
 
     // load sp
     msr spsel, #0
@@ -122,39 +107,9 @@ enter_current_task:
     mov sp, x1
     msr spsel, #1
 
-    // add x0, x0, #8
-    // mov x1, sp
-    // msr spsel, #0
-    // mov sp, x1
-    // msr spsel, #1
-
-    /** debug **/
-    msr spsel, #0
-    mov x20, x0
-    mov x0, sp
-    mov x1, #31
-    bl print_reg
-    mov x0, x20
-    msr spsel, #1
-
-    // msr spsel, #1
-
-    /** debug **/
-    mov x20, x0
-    mov x1, #0
-    bl print_reg
-    mov x0, x20
-
     // load spsr
     ldr x1, [x0], #8
     msr spsr_el1, x1
-
-    /** debug **/
-    mov x20, x0
-    mrs x0, spsr_el1
-    mov x1, #32
-    bl print_reg
-    mov x0, x20
 
     // load pc
     ldr x1, [x0], #8
@@ -163,21 +118,6 @@ enter_current_task:
     // load x0
     sub x0, x0, #(34*8)
     ldr x0, [x0]
-
-    /** debug **/
-    mov x20, x0
-    mov x1, #0
-    bl print_reg
-    mov x0, x20
-
-    /** debug elr_el1 **/
-    mov x20, x0
-    mrs x0, elr_el1
-    mov x1, #33
-    bl print_reg
-    mov x0, x20
-
-    bl handle_error
 
     eret
 

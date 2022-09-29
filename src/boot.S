@@ -36,7 +36,7 @@ _start:
     // check processor ID is zero (executing on main core), else loop
     mrs  x0, mpidr_el1
     and  x0, x0, #3
-    cbnz x0, exit
+    cbnz x0, exit_all
 
     // are we already in EL1?
     mrs  x1, CurrentEL
@@ -81,9 +81,10 @@ el1_entry:
     movk  w1, 0x5a00, lsl 16
     str w1, [x0]
 
-exit:
+.global exit_all
+exit_all:
     wfi
-    b    exit
+    b    exit_all
 
 .section ".bss"
 .balign 16

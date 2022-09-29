@@ -6,12 +6,15 @@
 #include "../src/task_scheduler.h"
 
 void print_task(Task *task) {
-    printf("\r\nCalling print_task: %d\r\n", task);
+//    printf("\r\nCalling print_task: %d\r\n", task);
     printf("tid=%d, pid=%d, priority=%d\r\n", task->tid, task->parent_tid, task->priority);
-    for (int i = 0; i < 31; i++) {
+    for (int i = 0; i < 3; i++) {
         printf("reg[%d]=%d\r\n", i, task->x[i]);
     }
-    printf("sp=%d, spsr=%d, pc=%d\r\n", task->sp, task->spsr, task->pc);
+//    for (int i = 0; i < 31; i++) {
+//        printf("reg[%d]=%d\r\n", i, task->x[i]);
+//    }
+//    printf("sp=%x, spsr=%x, pc=%x\r\n", task->sp, task->spsr, task->pc);
 }
 
 void print_current_task() {
