@@ -1,34 +1,12 @@
+#include "macro.S"
 .text
 .align 4
-.global _exception_entry
+.global exception_entry
 
-_exception_entry:
+exception_entry:
 
 leave_current_task:
-    // store x0 to SP, so that x0 can be used temporarily
-    str x0, [sp, #-16]!
-
-    // put current task to x0
-    ldr x0, =current_task
-    ldr x0, [x0]
-    add x0, x0, #8
-
-    // save x1 - x30
-    stp x1, x2, [x0], #16
-    stp x3, x4, [x0], #16
-    stp x5, x6, [x0], #16
-    stp x7, x8, [x0], #16
-    stp x9, x10, [x0], #16
-    stp x11, x12, [x0], #16
-    stp x13, x14, [x0], #16
-    stp x15, x16, [x0], #16
-    stp x17, x18, [x0], #16
-    stp x19, x20, [x0], #16
-    stp x21, x22, [x0], #16
-    stp x23, x24, [x0], #16
-    stp x25, x26, [x0], #16
-    stp x27, x28, [x0], #16
-    stp x29, x30, [x0], #16
+    save_general_regs current_task
 
     // save sp
     msr spsel, #0
@@ -44,12 +22,6 @@ leave_current_task:
     mrs x1, elr_el1
     str x1, [x0], #8
 
-    // save x0
-    ldr x1, [sp], #16
-    ldr x0, =current_task
-    ldr x0, [x0]
-    str x1, [x0]
-
 start_handle_exception:
     mrs x0, esr_el1
     bl handle_exception
@@ -58,11 +30,11 @@ start_handle_exception:
 
 .align 4
 .text
-.global _enter_current_task
+.global enter_current_task
 /** @arg current_task **/
 /** Context switch back to current_task **/
 
-_enter_current_task:
+enter_current_task:
     ldr x0, =current_task
     ldr x0, [x0]
 
@@ -122,9 +94,9 @@ _enter_current_task:
     eret
 
 
-.global _handle_error
+.global handle_error
 .align 4
-_handle_error:
+handle_error:
     mrs x0, CurrentEL
     mrs x1, ELR_EL1
     mrs x2, ESR_EL1

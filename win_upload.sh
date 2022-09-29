@@ -1,4 +1,4 @@
-make
+make clean; make
 USER="r65liu"
 HOST="linux.student.cs.uwaterloo.ca"
 U_H=${USER}@${HOST}
