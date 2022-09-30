@@ -1,12 +1,6 @@
 #include "macro.S"
-.text
-.align 4
-.global exception_entry
-
-exception_entry:
-
-leave_current_task:
-    save_general_regs current_task
+.macro save_user_regs var
+    save_general_regs \var
 
     // save sp
     msr spsel, #0
@@ -21,21 +15,10 @@ leave_current_task:
     // str pc
     mrs x1, elr_el1
     str x1, [x0], #8
+.endm
 
-start_handle_exception:
-    mrs x0, esr_el1
-    bl handle_exception
-    bl schedule
-
-
-.align 4
-.text
-.global enter_current_task
-/** @arg current_task **/
-/** Context switch back to current_task **/
-
-enter_current_task:
-    load_global x0, current_task
+.macro load_user_regs var
+    load_global x0, \var
 
     // load x1 - x30
     add x0, x0, #(8*31)
@@ -55,8 +38,26 @@ enter_current_task:
     msr elr_el1, x1
 
     // load x30 to x0
-    load_general_regs current_task
+    load_general_regs \var
+.endm
 
+.text
+.align 4
+.global exception_entry
+
+// =================================== MACROS END HERE ================================== //
+
+exception_entry:
+    save_user_regs
+    mrs x0, esr_el1
+    bl handle_exception
+    bl schedule
+
+.align 4
+.text
+.global enter_current_task
+enter_current_task:
+    load_user_regs current_task
     eret
 
 
