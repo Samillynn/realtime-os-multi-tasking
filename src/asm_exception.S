@@ -5,22 +5,21 @@
 
 exception_entry:
     save_user_regs current_task
+    load_general_regs kernel_regs
 
-start_handle_exception:
     mrs x0, esr_el1
-    bl handle_exception
-    bl schedule
+    ret
 
 
 .align 4
 .text
-.global enter_current_task
+.global activate
 /** @arg current_task **/
 /** Context switch back to current_task **/
 
-enter_current_task:
+activate:
+    save_general_regs kernel_regs
     load_user_regs current_task
-
     eret
 
 
@@ -30,7 +29,5 @@ handle_error:
     mrs x0, CurrentEL
     mrs x1, ELR_EL1
     mrs x2, ESR_EL1
-    // mrs x3, ELR_EL2
-    // mrs x4, ESR_EL2
-    // bl print_error
+    bl print_error
     ret

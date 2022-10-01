@@ -6,6 +6,9 @@
 #include "task_scheduler.h"
 #include "exception.h"
 
+u64 _kernel_regs[31];
+u64* kernel_regs = _kernel_regs;
+
 void boot() {
     init_gpio();
     init_spi(0);
