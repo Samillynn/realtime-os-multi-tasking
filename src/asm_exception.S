@@ -35,27 +35,7 @@ start_handle_exception:
 /** Context switch back to current_task **/
 
 enter_current_task:
-    load_global x0, current_task
-
-    // load x1 - x30
-    add x0, x0, #(8*31)
-
-    // load sp
-    msr spsel, #0
-    ldr x1, [x0], #8
-    mov sp, x1
-    msr spsel, #1
-
-    // load spsr
-    ldr x1, [x0], #8
-    msr spsr_el1, x1
-
-    // load pc
-    ldr x1, [x0], #8
-    msr elr_el1, x1
-
-    // load x30 to x0
-    load_general_regs current_task
+    load_user_regs current_task
 
     eret
 

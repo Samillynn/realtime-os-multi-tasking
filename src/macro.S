@@ -10,7 +10,7 @@
     // store x0 to SP, so that x0 can be used temporarily
     str x0, [sp, #-16]!
 
-    load_global x0, current_task
+    load_global x0, \var
     add x0, x0, #8
 
     // save x1 - x30
@@ -39,38 +39,51 @@
 
 .macro load_general_regs var
 
-load_global x0, current_task
-add x0, x0, #(8*31)
+load_global x0, \var
+    add x0, x0, #(8*31)
 
-ldp x29, x30, [x0, #-16]!
-ldp x27, x28, [x0, #-16]!
-ldp x25, x26, [x0, #-16]!
-ldp x23, x24, [x0, #-16]!
-ldp x21, x22, [x0, #-16]!
-ldp x19, x20, [x0, #-16]!
-ldp x17, x18, [x0, #-16]!
-ldp x15, x16, [x0, #-16]!
-ldp x13, x14, [x0, #-16]!
-ldp x11, x12, [x0, #-16]!
-ldp x9, x10, [x0, #-16]!
-ldp x7, x8, [x0, #-16]!
-ldp x5, x6, [x0, #-16]!
-ldp x3, x4, [x0, #-16]!
-ldp x1, x2, [x0, #-16]!
+    ldp x29, x30, [x0, #-16]!
+    ldp x27, x28, [x0, #-16]!
+    ldp x25, x26, [x0, #-16]!
+    ldp x23, x24, [x0, #-16]!
+    ldp x21, x22, [x0, #-16]!
+    ldp x19, x20, [x0, #-16]!
+    ldp x17, x18, [x0, #-16]!
+    ldp x15, x16, [x0, #-16]!
+    ldp x13, x14, [x0, #-16]!
+    ldp x11, x12, [x0, #-16]!
+    ldp x9, x10, [x0, #-16]!
+    ldp x7, x8, [x0, #-16]!
+    ldp x5, x6, [x0, #-16]!
+    ldp x3, x4, [x0, #-16]!
+    ldp x1, x2, [x0, #-16]!
 
-sub x0, x0, #8
-ldr x0, [x0]
-
+    sub x0, x0, #8
+    ldr x0, [x0]
 .endm
 
-.macro make_svc func_name svc_code
-.text
-.align 4
-.global \func_name
-\func_name:
-    svc #\svc_code
-    ret
-.endm
+.macro load_user_regs var
+    load_global x0, \var
 
+    // load x1 - x30
+    add x0, x0, #(8*31)
+
+    // load sp
+    msr spsel, #0
+    ldr x1, [x0], #8
+    mov sp, x1
+    msr spsel, #1
+
+    // load spsr
+    ldr x1, [x0], #8
+    msr spsr_el1, x1
+
+    // load pc
+    ldr x1, [x0], #8
+    msr elr_el1, x1
+
+    // load x30 to x0
+    load_general_regs \var
+.endm
 
 #endif
