@@ -13,11 +13,11 @@ exception_entry:
 
 .align 4
 .text
-.global activate
+.global activate_current_task
 /** @arg current_task **/
 /** Context switch back to current_task **/
 
-activate:
+activate_current_task:
     save_general_regs kernel_regs
     load_user_regs current_task
     eret

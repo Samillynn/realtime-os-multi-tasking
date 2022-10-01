@@ -13,14 +13,12 @@ void boot() {
     init_gpio();
     init_spi(0);
     init_uart(0);
-//    printf("Init I/O\r\n");
+    printf("Init I/O\r\n");
 
     memory_init();
-//    printf("Init memory\r\n");
-    handle_error();
+    printf("Init memory\r\n");
     task_queue_init();
-//    printf("Init task queue\r\n");
-    handle_error();
+    printf("Init task queue\r\n");
 }
 
 void kmain() {

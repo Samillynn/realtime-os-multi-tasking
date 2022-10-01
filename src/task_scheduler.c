@@ -147,16 +147,5 @@ Task *schedule() {
         task_queue_add(current_task);
     }
 
-    current_task = task_queue_pop();
-    if (get_current_task() != NULL) {
-//        printf("The newly scheduled task is\r\n");
-        print_current_task();
-//        printf("Enter current task, aka. context switch\r\n");
-//        printf("------------------------------\r\n");
-        enter_current_task();
-    } else {
-        printf("All user tasks have finished, exit elegantly\r\n");
-        exit_all();
-    }
-    return current_task;
+    return task_queue_pop();
 }

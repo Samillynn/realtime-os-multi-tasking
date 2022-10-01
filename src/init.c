@@ -25,12 +25,11 @@ void init_exception_handlers() {
 
 void init_first_user_task() {
 //    printf("Initializing first user task\r\n");
-    Task* task = create_task(INITIAL_PRIORITY, initial_user_task, -1);
+    create_task(INITIAL_PRIORITY, initial_user_task, -1);
 
 //    printf("Value of pc: %u\r\n", task->pc);
 //    printf("Address of initial_user_task: %u\r\n", initial_user_task);
 
     // start to run user programs
 //    printf("Finish initializing first task\r\n");
-    schedule();
 }
