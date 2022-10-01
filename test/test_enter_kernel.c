@@ -5,7 +5,7 @@
 #include "../src/task.h"
 #include "../src/exception.h"
 #include "../src/syscall.h"
-#include "../src/init.h"
+#include "../src/init_kernel.h"
 #include "../src/kernel.h"
 #include "../src/user_tasks.h"
 

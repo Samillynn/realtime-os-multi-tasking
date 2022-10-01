@@ -9,6 +9,11 @@
 
 u64 (*exception_handlers[1 << 16 ])(void);
 
+u64 activate(Task* task) {
+    current_task = task;
+    activate_current_task();
+}
+
 void handle_exception(u64 esr) {
 //    printf("Calling Handle Exception\r\n");
 //    printf("Exception code is %u\r\n", esr);
