@@ -4847,42 +4847,42 @@ Disassembly of section .text:
 	...
 
 0000000000085790 <exception_entry>:
-   85790:	58000900 	ldr	x0, 858b0 <handle_error+0x10>
-   85794:	f9400000 	ldr	x0, [x0]
-   85798:	9103e000 	add	x0, x0, #0xf8
-   8579c:	d50040bf 	msr	spsel, #0x0
-   857a0:	f8408401 	ldr	x1, [x0], #8
-   857a4:	9100003f 	mov	sp, x1
-   857a8:	d50041bf 	msr	spsel, #0x1
-   857ac:	f8408401 	ldr	x1, [x0], #8
-   857b0:	d5184001 	msr	spsr_el1, x1
-   857b4:	f8408401 	ldr	x1, [x0], #8
-   857b8:	d5184021 	msr	elr_el1, x1
-   857bc:	580007a0 	ldr	x0, 858b0 <handle_error+0x10>
-   857c0:	f9400000 	ldr	x0, [x0]
-   857c4:	9103e000 	add	x0, x0, #0xf8
-   857c8:	a9ff781d 	ldp	x29, x30, [x0, #-16]!
-   857cc:	a9ff701b 	ldp	x27, x28, [x0, #-16]!
-   857d0:	a9ff6819 	ldp	x25, x26, [x0, #-16]!
-   857d4:	a9ff6017 	ldp	x23, x24, [x0, #-16]!
-   857d8:	a9ff5815 	ldp	x21, x22, [x0, #-16]!
-   857dc:	a9ff5013 	ldp	x19, x20, [x0, #-16]!
-   857e0:	a9ff4811 	ldp	x17, x18, [x0, #-16]!
-   857e4:	a9ff400f 	ldp	x15, x16, [x0, #-16]!
-   857e8:	a9ff380d 	ldp	x13, x14, [x0, #-16]!
-   857ec:	a9ff300b 	ldp	x11, x12, [x0, #-16]!
-   857f0:	a9ff2809 	ldp	x9, x10, [x0, #-16]!
-   857f4:	a9ff2007 	ldp	x7, x8, [x0, #-16]!
-   857f8:	a9ff1805 	ldp	x5, x6, [x0, #-16]!
-   857fc:	a9ff1003 	ldp	x3, x4, [x0, #-16]!
-   85800:	a9ff0801 	ldp	x1, x2, [x0, #-16]!
-   85804:	d1002000 	sub	x0, x0, #0x8
-   85808:	f9400000 	ldr	x0, [x0]
+   85790:	f81f0fe0 	str	x0, [sp, #-16]!
+   85794:	580008e0 	ldr	x0, 858b0 <handle_error+0x10>
+   85798:	f9400000 	ldr	x0, [x0]
+   8579c:	91002000 	add	x0, x0, #0x8
+   857a0:	a8810801 	stp	x1, x2, [x0], #16
+   857a4:	a8811003 	stp	x3, x4, [x0], #16
+   857a8:	a8811805 	stp	x5, x6, [x0], #16
+   857ac:	a8812007 	stp	x7, x8, [x0], #16
+   857b0:	a8812809 	stp	x9, x10, [x0], #16
+   857b4:	a881300b 	stp	x11, x12, [x0], #16
+   857b8:	a881380d 	stp	x13, x14, [x0], #16
+   857bc:	a881400f 	stp	x15, x16, [x0], #16
+   857c0:	a8814811 	stp	x17, x18, [x0], #16
+   857c4:	a8815013 	stp	x19, x20, [x0], #16
+   857c8:	a8815815 	stp	x21, x22, [x0], #16
+   857cc:	a8816017 	stp	x23, x24, [x0], #16
+   857d0:	a8816819 	stp	x25, x26, [x0], #16
+   857d4:	a881701b 	stp	x27, x28, [x0], #16
+   857d8:	a881781d 	stp	x29, x30, [x0], #16
+   857dc:	f84107e1 	ldr	x1, [sp], #16
+   857e0:	d103e000 	sub	x0, x0, #0xf8
+   857e4:	f80f8401 	str	x1, [x0], #248
+   857e8:	d50040bf 	msr	spsel, #0x0
+   857ec:	910003e1 	mov	x1, sp
+   857f0:	f8008401 	str	x1, [x0], #8
+   857f4:	d50041bf 	msr	spsel, #0x1
+   857f8:	d5384001 	mrs	x1, spsr_el1
+   857fc:	f8008401 	str	x1, [x0], #8
+   85800:	d5384021 	mrs	x1, elr_el1
+   85804:	f8008401 	str	x1, [x0], #8
 
-000000000008580c <start_handle_exception>:
-   8580c:	d5385200 	mrs	x0, esr_el1
-   85810:	97fff8ef 	bl	83bcc <handle_exception>
-   85814:	97fffa5e 	bl	8418c <schedule>
+0000000000085808 <start_handle_exception>:
+   85808:	d5385200 	mrs	x0, esr_el1
+   8580c:	97fff8f0 	bl	83bcc <handle_exception>
+   85810:	97fffa5f 	bl	8418c <schedule>
+   85814:	d503201f 	nop
    85818:	d503201f 	nop
    8581c:	d503201f 	nop
 
@@ -12033,8 +12033,8 @@ Disassembly of section .debug_line:
     18ec:	02090001 	.inst	0x02090001 ; undefined
     18f0:	00085790 	.inst	0x00085790 ; undefined
     18f4:	00000000 	udf	#0
-    18f8:	21d9081a 	.inst	0x21d9081a ; undefined
-    18fc:	3c0a0321 	stur	b1, [x25, #160]
+    18f8:	21cb0819 	.inst	0x21cb0819 ; undefined
+    18fc:	4a0a0321 	eor	w1, w25, w10
     1900:	2126d808 	.inst	0x2126d808 ; undefined
     1904:	03022421 	.inst	0x03022421 ; undefined
     1908:	97010100 	bl	fffffffffc041d08 <stackend+0xfffffffffbb14b18>

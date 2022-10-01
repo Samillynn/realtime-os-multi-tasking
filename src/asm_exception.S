@@ -4,9 +4,7 @@
 .global exception_entry
 
 exception_entry:
-
-leave_current_task:
-    load_user_regs current_task
+    save_user_regs current_task
 
 start_handle_exception:
     mrs x0, esr_el1
