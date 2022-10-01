@@ -86,4 +86,22 @@ load_global x0, \var
     load_general_regs \var
 .endm
 
+.macro save_user_regs var
+    save_general_regs \var
+
+    // save sp
+    msr spsel, #0
+    mov x1, sp
+    str x1, [x0], #8
+    msr spsel, #1
+
+    // str spsr
+    mrs x1, spsr_el1
+    str x1, [x0], #8
+
+    // str pc
+    mrs x1, elr_el1
+    str x1, [x0], #8
+.endm
+
 #endif

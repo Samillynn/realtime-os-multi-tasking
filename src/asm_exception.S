@@ -6,21 +6,7 @@
 exception_entry:
 
 leave_current_task:
-    save_general_regs current_task
-
-    // save sp
-    msr spsel, #0
-    mov x1, sp
-    str x1, [x0], #8
-    msr spsel, #1
-
-    // str spsr
-    mrs x1, spsr_el1
-    str x1, [x0], #8
-
-    // str pc
-    mrs x1, elr_el1
-    str x1, [x0], #8
+    load_user_regs current_task
 
 start_handle_exception:
     mrs x0, esr_el1
