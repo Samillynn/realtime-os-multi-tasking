@@ -14,6 +14,8 @@ u64 activate_current_task();
 
 u64 activate(Task* task);
 
+void print_error(u64 current_el, u64 elr1, u64 esr1);
+
 void handle_error();
 #endif
 

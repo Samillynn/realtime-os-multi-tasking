@@ -18,11 +18,8 @@ void init_kernel() {
     init_spi(0);
     init_uart(0);
     memory_init();
-//    printf("Init memory\r\n");
     task_queue_init();
-//    printf("Init task queue\r\n");
     init_vector_table();
-//    printf("Vector table initialized\r\n");
     init_exception_handlers();
 }
 
